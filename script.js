@@ -12,3 +12,13 @@ function imgPrevDefault() {
 		});
 	});
 }
+
+// add event listener to slides
+
+slides.forEach((slide) => {
+	// pc listeners
+	slide.addEventListener('mousedown', slideStart());
+	slide.addEventListener('mouseleave', slideEnd);
+	slide.addEventListener('mousemove', slideMove);
+	slide.addEventListener('mouseup', slideEnd);
+});
