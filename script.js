@@ -5,7 +5,7 @@ const slider = document.getElementById('slider'),
 let startPos = 0,
 	isDragging = false,
 	currTranslate = 0,
-	curPosition = 0,
+	startposition = 0,
 	prevTranslate = 0;
 
 // prevent default behaviour when dragging images
@@ -26,15 +26,14 @@ slides.forEach((slide) => {
 	// pc listeners
 	slide.addEventListener('mousedown', slideStart());
 	// slide.addEventListener('mouseleave', slideEnd);
-	// slide.addEventListener('mousemove', slideMove);
+	slide.addEventListener('mousemove', slideMove);
 	// slide.addEventListener('mouseup', slideEnd);
 });
 
 function slideStart() {
 	return function (event) {
-		curPosition = getPosition(event);
+		startPosition = getPosition(event);
 		isDragging = true;
-		console.log(curPosition);
 	};
 }
 
