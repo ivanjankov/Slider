@@ -5,8 +5,9 @@ const slider = document.getElementById('slider'),
 let startPos = 0,
 	isDragging = false,
 	currTranslate = 0,
-	startposition = 0,
-	prevTranslate = 0;
+	startPosition = 0,
+	prevTranslate = 0,
+	curPosition = 0;
 
 // prevent default behaviour when dragging images
 
@@ -27,7 +28,7 @@ slides.forEach((slide) => {
 	slide.addEventListener('mousedown', slideStart());
 	// slide.addEventListener('mouseleave', slideEnd);
 	slide.addEventListener('mousemove', slideMove);
-	// slide.addEventListener('mouseup', slideEnd);
+	slide.addEventListener('mouseup', slideEnd);
 });
 
 function slideStart() {
@@ -37,6 +38,22 @@ function slideStart() {
 	};
 }
 
+function slideMove() {
+	if (isDragging) {
+		const currPosition = getPosition(event);
+		currTranslate = prevTranslate + currPosition - startPosition;
+		translateSlider();
+	}
+}
+
+function slideEnd() {
+	isDragging = false;
+}
+
 function getPosition(event) {
 	return event.pageX;
+}
+
+function translateSlider() {
+	slider.style.transform = `translateX(${currTranslate}px)`;
 }
