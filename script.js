@@ -48,6 +48,7 @@ function slideMove() {
 
 function slideEnd() {
 	isDragging = false;
+	updateTranslateWhenDragOver();
 }
 
 function getPosition(event) {
@@ -56,4 +57,8 @@ function getPosition(event) {
 
 function translateSlider() {
 	slider.style.transform = `translateX(${currTranslate}px)`;
+}
+
+function updateTranslateWhenDragOver() {
+	prevTranslate = currTranslate;
 }
