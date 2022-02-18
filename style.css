@@ -63,7 +63,7 @@ picture {
 	cursor: grab;
 }
 
-.single_slide > img {
+.single_slide a img {
 	position: absolute;
 	left: 0;
 	top: 0;

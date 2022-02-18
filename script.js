@@ -1,6 +1,7 @@
 const slider = document.getElementById('slider'),
 	slides = Array.from(document.querySelectorAll('.single_slide')),
-	sliderImages = Array.from(document.querySelectorAll('.slider_image'));
+	sliderLinksArr = Array.from(document.querySelectorAll('.slider_image')),
+	sliderImages = Array.from(document.querySelectorAll('.slider_img'));
 const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 const sliderImgWidth = sliderImages[1].getBoundingClientRect().width;
@@ -18,7 +19,7 @@ let startPos = 0,
 imgPrevDefault();
 
 function imgPrevDefault() {
-	sliderImages.forEach((img) => {
+	sliderLinksArr.forEach((img) => {
 		img.addEventListener('dragstart', (e) => {
 			e.preventDefault();
 		});
