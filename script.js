@@ -122,3 +122,13 @@ nextBtn.addEventListener('click', () => {
 	moveSliderWhenBtnPressed('next');
 	animate();
 });
+
+// move slider to the center of the screen
+
+function positionSliderInMiddle() {
+	const screenHalfSize = window.innerWidth / 2;
+	currTranslate = screenHalfSize - sliderImgWidth / 2;
+	translateSlider();
+	updateTranslateWhenDragOver();
+}
+positionSliderInMiddle();
