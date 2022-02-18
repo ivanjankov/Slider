@@ -7,6 +7,7 @@ let startPos = 0,
 	currTranslate = 0,
 	startPosition = 0,
 	prevTranslate = 0;
+animationID;
 
 // prevent default behaviour when dragging images
 
@@ -67,4 +68,9 @@ function translateSlider() {
 
 function updateTranslateWhenDragOver() {
 	prevTranslate = currTranslate;
+}
+
+function animate() {
+	slider.style.transition = `transform 300ms ease`;
+	animationID = requestAnimationFrame(animate);
 }
