@@ -3,13 +3,14 @@ const slider = document.getElementById('slider'),
 	sliderImages = Array.from(document.querySelectorAll('.slider_image'));
 const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
+const sliderImgWidth = sliderImages[1].getBoundingClientRect().width;
 
 let startPos = 0,
 	isDragging = false,
 	currTranslate = 0,
 	startPosition = 0,
-	prevTranslate = 0;
-animationID;
+	prevTranslate = 0,
+	animationID;
 
 // prevent default behaviour when dragging images
 
@@ -81,3 +82,27 @@ function animate() {
 	slider.style.transition = `transform 300ms ease`;
 	animationID = requestAnimationFrame(animate);
 }
+
+// next & prev button functionality
+
+function moveSliderWhenBtnPressed(direction) {
+	if (direction == 'prev') {
+		currTranslate -= sliderImgWidth;
+		translateSlider();
+		updateTranslateWhenDragOver();
+	} else if (direction == 'next') {
+		currTranslate += sliderImgWidth;
+		translateSlider();
+		updateTranslateWhenDragOver();
+	}
+}
+
+prevBtn.addEventListener('click', () => {
+	moveSliderWhenBtnPressed('prev');
+	animate();
+});
+
+nextBtn.addEventListener('click', () => {
+	moveSliderWhenBtnPressed('next');
+	animate();
+});
