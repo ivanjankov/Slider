@@ -6,8 +6,7 @@ let startPos = 0,
 	isDragging = false,
 	currTranslate = 0,
 	startPosition = 0,
-	prevTranslate = 0,
-	curPosition = 0;
+	prevTranslate = 0;
 
 // prevent default behaviour when dragging images
 
@@ -24,9 +23,16 @@ function imgPrevDefault() {
 // add event listener to slides
 
 slides.forEach((slide) => {
+	// functions
+	slide.addEventListener('click', (e) => {
+		if (dragged == true) {
+			e.preventDefault();
+		}
+	});
+
 	// pc listeners
 	slide.addEventListener('mousedown', slideStart());
-	// slide.addEventListener('mouseleave', slideEnd);
+	slide.addEventListener('mouseleave', slideEnd);
 	slide.addEventListener('mousemove', slideMove);
 	slide.addEventListener('mouseup', slideEnd);
 });
