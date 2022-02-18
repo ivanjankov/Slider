@@ -1,6 +1,8 @@
 const slider = document.getElementById('slider'),
 	slides = Array.from(document.querySelectorAll('.single_slide')),
 	sliderImages = Array.from(document.querySelectorAll('.slider_image'));
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
 
 let startPos = 0,
 	isDragging = false,
