@@ -10,7 +10,8 @@ let startPos = 0,
 	currTranslate = 0,
 	startPosition = 0,
 	prevTranslate = 0,
-	animationID;
+	animationID,
+	sliderDragging = false;
 
 // prevent default behaviour when dragging images
 
@@ -29,7 +30,7 @@ function imgPrevDefault() {
 slides.forEach((slide) => {
 	// functions
 	slide.addEventListener('click', (e) => {
-		if (dragged == true) {
+		if (sliderDragging == true) {
 			e.preventDefault();
 		}
 	});
@@ -50,11 +51,13 @@ function slideStart() {
 	return function (event) {
 		startPosition = getPosition(event);
 		isDragging = true;
+		sliderDragging = false;
 	};
 }
 
 function slideMove() {
 	if (isDragging) {
+		sliderDragging = true;
 		const currPosition = getPosition(event);
 		currTranslate = prevTranslate + currPosition - startPosition;
 		translateSlider();
@@ -62,6 +65,10 @@ function slideMove() {
 }
 
 function slideEnd() {
+	if (sliderDragging !== true) {
+		isDragging = false;
+		return;
+	}
 	isDragging = false;
 	updateTranslateWhenDragOver();
 }
