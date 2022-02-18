@@ -58,7 +58,7 @@ function slideEnd() {
 }
 
 function getPosition(event) {
-	return event.pageX;
+	return event.type.includes('mouse') ? event.pageX : event.touches[0].screenX;
 }
 
 function translateSlider() {
