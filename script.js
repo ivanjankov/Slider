@@ -90,10 +90,18 @@ function moveSliderWhenBtnPressed(direction) {
 		currTranslate -= sliderImgWidth;
 		translateSlider();
 		updateTranslateWhenDragOver();
+		setTimeout(() => {
+			cancelAnimationFrame(animationID);
+			slider.style.transition = 'none';
+		}, 701);
 	} else if (direction == 'next') {
 		currTranslate += sliderImgWidth;
 		translateSlider();
 		updateTranslateWhenDragOver();
+		setTimeout(() => {
+			cancelAnimationFrame(animationID);
+			slider.style.transition = 'none';
+		}, 701);
 	}
 }
 
