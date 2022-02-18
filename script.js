@@ -31,6 +31,11 @@ slides.forEach((slide) => {
 		}
 	});
 
+	// touch listeneres
+	slide.addEventListener('touchstart', slideStart());
+	slide.addEventListener('touchend', slideEnd);
+	slide.addEventListener('touchmove', slideMove);
+
 	// pc listeners
 	slide.addEventListener('mousedown', slideStart());
 	slide.addEventListener('mouseleave', slideEnd);
