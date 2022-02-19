@@ -12,7 +12,8 @@ let startPos = 0,
 	startPosition = 0,
 	prevTranslate = 0,
 	animationID,
-	sliderDragging = false;
+	sliderDragging = false,
+	startingTranslate = 0;
 
 // prevent default behaviour when dragging images
 
@@ -62,14 +63,17 @@ function slideMove() {
 		const currPosition = getPosition(event);
 		currTranslate = prevTranslate + currPosition - startPosition;
 		translateSlider();
+		positionBackSlider();
 	}
 }
 
 function slideEnd() {
 	if (sliderDragging !== true) {
 		isDragging = false;
+		translateSlider();
 		return;
 	}
+
 	isDragging = false;
 	updateTranslateWhenDragOver();
 }
@@ -128,7 +132,30 @@ nextBtn.addEventListener('click', () => {
 function positionSliderInMiddle() {
 	const screenHalfSize = window.innerWidth / 2;
 	currTranslate = screenHalfSize - sliderImgWidth / 2;
+	startingTranslate = currTranslate;
 	translateSlider();
 	updateTranslateWhenDragOver();
 }
 positionSliderInMiddle();
+
+// bring back slider if last/first slide reach center
+const lastImageBoundingRightStart =
+	sliderImages[sliderImages.length - 1].getBoundingClientRect().right;
+const firstImageBoundingRight = sliderImages[0].getBoundingClientRect().right;
+
+function positionBackSlider() {
+	const displayHalfWidth = window.innerWidth / 2;
+	const lastImageBoundingRight =
+		sliderImages[sliderImages.length - 1].getBoundingClientRect().right;
+	const firstImageBoundingLeft = sliderImages[0].getBoundingClientRect().left;
+
+	if (lastImageBoundingRight < displayHalfWidth) {
+		currTranslate =
+			startingTranslate -
+			(lastImageBoundingRightStart - firstImageBoundingRight);
+		translateSlider();
+	} else if (firstImageBoundingLeft > displayHalfWidth) {
+		currTranslate = displayHalfWidth - sliderImgWidth / 2;
+		translateSlider();
+	}
+}
