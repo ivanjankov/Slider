@@ -5,6 +5,7 @@ const slider = document.getElementById('slider'),
 const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 const sliderImgWidth = sliderImages[1].getBoundingClientRect().width;
+const bgGlobe = document.getElementById('bg_globe');
 
 let startPos = 0,
 	isDragging = false,
@@ -14,7 +15,8 @@ let startPos = 0,
 	animationID,
 	sliderDragging = false,
 	startingTranslate = 0,
-	sliderImgMarginRight = 0;
+	sliderImgMarginRight = 0,
+	globeRotation = 0;
 
 // prevent default behaviour when dragging images
 
@@ -65,6 +67,7 @@ function slideMove() {
 		sliderDragging = true;
 		const currPosition = getPosition(event);
 		currTranslate = prevTranslate + currPosition - startPosition;
+		rotateGlobe();
 		translateSlider();
 		positionBackSlider();
 	}
@@ -170,4 +173,24 @@ function positionBackSlider() {
 		currTranslate = displayHalfWidth - sliderImgWidth / 2;
 		translateSlider();
 	}
+}
+
+// globe rotation functionality
+
+function calcRotationDeg() {
+	let screenHalfSize = window.innerWidth / 2;
+	let maxSliderMovement = lastImageBoundingRightStart - screenHalfSize;
+	let degreeToPxOdd = 360 / maxSliderMovement;
+	let currentBoundgright =
+		sliderImages[sliderImages.length - 1].getBoundingClientRect().right;
+	let currSliderMovement = currentBoundgright - screenHalfSize;
+	let totalDegrees = Math.round(360 - currSliderMovement * degPxRatio);
+
+	return totalDegrees;
+}
+
+function rotateGlobe() {
+	let translation = calcRotationDeg();
+	console.log(translation);
+	bgGlobe.style.transform = `rotate(${translation}deg)`;
 }
