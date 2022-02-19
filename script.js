@@ -6,6 +6,7 @@ const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 const sliderImgWidth = sliderImages[1].getBoundingClientRect().width;
 const bgGlobe = document.getElementById('bg_globe');
+const displayHalfWidth = window.innerWidth / 2;
 
 let startPos = 0,
 	isDragging = false,
@@ -145,8 +146,7 @@ nextBtn.addEventListener('click', () => {
 // move slider to the center of the screen
 
 function positionSliderInMiddle() {
-	const screenHalfSize = window.innerWidth / 2;
-	currTranslate = screenHalfSize - sliderImgWidth / 2;
+	currTranslate = displayHalfWidth - sliderImgWidth / 2;
 	startingTranslate = currTranslate;
 	translateSlider();
 	updateTranslateWhenDragOver();
@@ -159,7 +159,6 @@ const lastImageBoundingRightStart =
 const firstImageBoundingRight = sliderImages[0].getBoundingClientRect().right;
 
 function positionBackSlider() {
-	const displayHalfWidth = window.innerWidth / 2;
 	const lastImageBoundingRight =
 		sliderImages[sliderImages.length - 1].getBoundingClientRect().right;
 	const firstImageBoundingLeft = sliderImages[0].getBoundingClientRect().left;
@@ -178,12 +177,12 @@ function positionBackSlider() {
 // globe rotation functionality
 
 function calcRotationDeg() {
-	let screenHalfSize = window.innerWidth / 2;
-	let maxSliderMovement = lastImageBoundingRightStart - screenHalfSize;
+	let displayHalfWidth = window.innerWidth / 2;
+	let maxSliderMovement = lastImageBoundingRightStart - displayHalfWidth;
 	let degreeToPxOdd = 360 / maxSliderMovement;
 	let currentBoundgright =
 		sliderImages[sliderImages.length - 1].getBoundingClientRect().right;
-	let currSliderMovement = currentBoundgright - screenHalfSize;
+	let currSliderMovement = currentBoundgright - displayHalfWidth;
 	let totalDegrees = Math.round(360 - currSliderMovement * degreeToPxOdd);
 
 	return totalDegrees;
