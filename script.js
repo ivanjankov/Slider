@@ -13,7 +13,8 @@ let startPos = 0,
 	prevTranslate = 0,
 	animationID,
 	sliderDragging = false,
-	startingTranslate = 0;
+	startingTranslate = 0,
+	sliderImgMarginRight = 0;
 
 // prevent default behaviour when dragging images
 
@@ -30,6 +31,8 @@ function imgPrevDefault() {
 // add event listener to slides
 
 slides.forEach((slide) => {
+	let compoundSlideStyle = window.getComputedStyle(slide);
+	sliderImgMarginRight = +compoundSlideStyle.marginRight.split('px')[0];
 	// functions
 	slide.addEventListener('click', (e) => {
 		if (sliderDragging == true) {
@@ -98,8 +101,14 @@ function animate() {
 // next & prev button functionality
 
 function moveSliderWhenBtnPressed(direction) {
+	let sumFullImgElement = sliderImgWidth + sliderImgMarginRight;
+	let maxNegativeTranslate =
+		startingTranslate - (lastImageBoundingRightStart - firstImageBoundingRight);
 	if (direction == 'prev') {
-		currTranslate -= sliderImgWidth;
+		currTranslate -= sumFullImgElement;
+		if (currTranslate < maxNegativeTranslate) {
+			currTranslate = maxNegativeTranslate;
+		}
 		translateSlider();
 		updateTranslateWhenDragOver();
 		setTimeout(() => {
@@ -107,7 +116,10 @@ function moveSliderWhenBtnPressed(direction) {
 			slider.style.transition = 'none';
 		}, 701);
 	} else if (direction == 'next') {
-		currTranslate += sliderImgWidth;
+		currTranslate += sumFullImgElement;
+		if (currTranslate > startingTranslate) {
+			currTranslate = startingTranslate;
+		}
 		translateSlider();
 		updateTranslateWhenDragOver();
 		setTimeout(() => {
