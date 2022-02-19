@@ -184,7 +184,7 @@ function calcRotationDeg() {
 	let currentBoundgright =
 		sliderImages[sliderImages.length - 1].getBoundingClientRect().right;
 	let currSliderMovement = currentBoundgright - screenHalfSize;
-	let totalDegrees = Math.round(360 - currSliderMovement * degPxRatio);
+	let totalDegrees = Math.round(360 - currSliderMovement * degreeToPxOdd);
 
 	return totalDegrees;
 }
