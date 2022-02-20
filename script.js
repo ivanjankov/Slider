@@ -97,8 +97,13 @@ function updateTranslateWhenDragOver() {
 	prevTranslate = currTranslate;
 }
 
-function animate() {
+function annimationStylesArr() {
 	slider.style.transition = `transform 300ms ease`;
+	bgGlobe.style.transition = `transform 300ms ease`;
+}
+
+function animate() {
+	annimationStylesArr();
 	animationID = requestAnimationFrame(animate);
 }
 
@@ -114,33 +119,39 @@ function moveSliderWhenBtnPressed(direction) {
 			currTranslate = maxNegativeTranslate;
 		}
 		translateSlider();
+		rotateGlobe();
 		updateTranslateWhenDragOver();
 		setTimeout(() => {
 			cancelAnimationFrame(animationID);
 			slider.style.transition = 'none';
-		}, 701);
+			bgGlobe.style.transition = 'none';
+		}, 801);
 	} else if (direction == 'next') {
 		currTranslate += sumFullImgElement;
 		if (currTranslate > startingTranslate) {
 			currTranslate = startingTranslate;
 		}
 		translateSlider();
+		rotateGlobe();
 		updateTranslateWhenDragOver();
 		setTimeout(() => {
 			cancelAnimationFrame(animationID);
 			slider.style.transition = 'none';
-		}, 701);
+			bgGlobe.style.transition = 'none';
+		}, 801);
 	}
 }
 
 prevBtn.addEventListener('click', () => {
-	moveSliderWhenBtnPressed('prev');
+	console.log('prev');
 	animate();
+	moveSliderWhenBtnPressed('prev');
+	rotateGlobe();
 });
 
 nextBtn.addEventListener('click', () => {
-	moveSliderWhenBtnPressed('next');
 	animate();
+	moveSliderWhenBtnPressed('next');
 });
 
 // move slider to the center of the screen
@@ -177,19 +188,18 @@ function positionBackSlider() {
 // globe rotation functionality
 
 function calcRotationDeg() {
-	let displayHalfWidth = window.innerWidth / 2;
-	let maxSliderMovement = lastImageBoundingRightStart - displayHalfWidth;
-	let degreeToPxOdd = 360 / maxSliderMovement;
-	let currentBoundgright =
-		sliderImages[sliderImages.length - 1].getBoundingClientRect().right;
-	let currSliderMovement = currentBoundgright - displayHalfWidth;
-	let totalDegrees = Math.round(360 - currSliderMovement * degreeToPxOdd);
+	let displayHalfWidth, maxSliderMovement, degreeToPxOdd, totalDegrees;
+	displayHalfWidth = window.innerWidth / 2;
+	maxSliderMovement = lastImageBoundingRightStart - displayHalfWidth;
+	degreeToPxOdd = 360 / maxSliderMovement;
+	totalDegrees = Math.round(
+		(startingTranslate - currTranslate) * degreeToPxOdd
+	);
 
 	return totalDegrees;
 }
 
 function rotateGlobe() {
 	let translation = calcRotationDeg();
-	console.log(translation);
 	bgGlobe.style.transform = `rotate(${translation}deg)`;
 }
