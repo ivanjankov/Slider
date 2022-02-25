@@ -190,7 +190,7 @@ function positionBackSlider() {
 function calcRotationDeg() {
 	let displayHalfWidth, maxSliderMovement, degreeToPxOdd, totalDegrees;
 	displayHalfWidth = window.innerWidth / 2;
-	maxSliderMovement = lastImageBoundingRightStart - displayHalfWidth;
+	maxSliderMovement = lastImageBoundingRightStart - displayHalfWidth - 80;
 	degreeToPxOdd = 360 / maxSliderMovement;
 	totalDegrees = Math.round(
 		(startingTranslate - currTranslate) * degreeToPxOdd
@@ -203,3 +203,19 @@ function rotateGlobe() {
 	let translation = calcRotationDeg();
 	bgGlobe.style.transform = `rotate(${translation}deg)`;
 }
+
+// add icons to circle side
+
+function circlesToGlobe() {
+	let circles = bgGlobe.querySelectorAll('.circle');
+	let angle = 360 - 90,
+		dangle = 360 / circles.length;
+	for (let i = 0; i < circles.length; ++i) {
+		let circle = circles[i];
+		angle += dangle;
+		circle.style.transform = `rotate(${angle}deg) translate(${
+			bgGlobe.clientWidth / 2
+		}px) rotate(-${270}deg)`;
+	}
+}
+circlesToGlobe();
