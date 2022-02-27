@@ -188,10 +188,15 @@ function positionBackSlider() {
 // globe rotation functionality
 
 function calcRotationDeg() {
-	let displayHalfWidth, maxSliderMovement, degreeToPxOdd, totalDegrees;
+	let displayHalfWidth,
+		maxSliderMovement,
+		degreeToPxOdd,
+		totalDegrees,
+		maxRotationDegrees;
 	displayHalfWidth = window.innerWidth / 2;
-	maxSliderMovement = lastImageBoundingRightStart - displayHalfWidth - 80;
-	degreeToPxOdd = 360 / maxSliderMovement;
+	maxSliderMovement = lastImageBoundingRightStart - displayHalfWidth - 220;
+	maxRotationDegrees = calcMaxDegrees();
+	degreeToPxOdd = maxRotationDegrees / maxSliderMovement;
 	totalDegrees = Math.round(
 		(startingTranslate - currTranslate) * degreeToPxOdd
 	);
@@ -201,6 +206,7 @@ function calcRotationDeg() {
 
 function rotateGlobe() {
 	let translation = calcRotationDeg();
+	console.log(translation, currTranslate);
 	bgGlobe.style.transform = `rotate(${translation}deg)`;
 }
 
@@ -218,4 +224,11 @@ function circlesToGlobe() {
 		}px) rotate(-${270}deg)`;
 	}
 }
+
+function calcMaxDegrees() {
+	let totalSlides = slides.length;
+	let maxRotationDegrees = (360 * (totalSlides - 1)) / totalSlides;
+	return maxRotationDegrees;
+}
+
 circlesToGlobe();
