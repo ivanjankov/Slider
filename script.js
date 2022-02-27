@@ -194,7 +194,7 @@ function calcRotationDeg() {
 		totalDegrees,
 		maxRotationDegrees;
 	displayHalfWidth = window.innerWidth / 2;
-	maxSliderMovement = lastImageBoundingRightStart - displayHalfWidth - 220;
+	maxSliderMovement = lastImageBoundingRightStart - displayHalfWidth - 270;
 	maxRotationDegrees = calcMaxDegrees();
 	degreeToPxOdd = maxRotationDegrees / maxSliderMovement;
 	totalDegrees = Math.round(
